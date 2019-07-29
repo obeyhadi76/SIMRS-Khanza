@@ -101,7 +101,6 @@ public class DlgPasien extends javax.swing.JDialog {
     private LocalDate today=LocalDate.now();
     private LocalDate birthday;
     private Period p;
-    private long p2;
 
     /** Creates new form DlgPas
      * @param parent
@@ -4310,18 +4309,41 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             if(Kelurahan.isEditable()==true){
                 Sequel.queryu4("insert into kelurahan values(?,?)",2,new String[]{"0",Kelurahan.getText().replaceAll("KELURAHAN","-")});
                 kdkel=Sequel.cariIsi("select kelurahan.kd_kel from kelurahan where kelurahan.nm_kel=?",Kelurahan.getText().replaceAll("KELURAHAN","-"));
+            }else if(Kelurahan.isEditable()==false){
+                if(kdkel.equals("")){
+                    Sequel.queryu4("insert into kelurahan values(?,?)",2,new String[]{"0",Kelurahan.getText().replaceAll("KELURAHAN","-")});
+                    kdkel=Sequel.cariIsi("select kelurahan.kd_kel from kelurahan where kelurahan.nm_kel=?",Kelurahan.getText().replaceAll("KELURAHAN","-"));
+                }
             }
+            
             if(Kecamatan.isEditable()==true){
                 Sequel.queryu4("insert into kecamatan values(?,?)",2,new String[]{"0",Kecamatan.getText().replaceAll("KECAMATAN","-")});
                 kdkec=Sequel.cariIsi("select kecamatan.kd_kec from kecamatan where kecamatan.nm_kec=?",Kecamatan.getText().replaceAll("KECAMATAN","-"));
-            }            
+            }else if(Kecamatan.isEditable()==false){
+                if(kdkec.equals("")){
+                    Sequel.queryu4("insert into kecamatan values(?,?)",2,new String[]{"0",Kecamatan.getText().replaceAll("KECAMATAN","-")});
+                    kdkec=Sequel.cariIsi("select kecamatan.kd_kec from kecamatan where kecamatan.nm_kec=?",Kecamatan.getText().replaceAll("KECAMATAN","-"));
+                }
+            }
+            
             if(Kabupaten.isEditable()==true){
                 Sequel.queryu4("insert into kabupaten values(?,?)",2,new String[]{"0",Kabupaten.getText().replaceAll("KABUPATEN","-")});
                 kdkab=Sequel.cariIsi("select kabupaten.kd_kab from kabupaten where kabupaten.nm_kab=?",Kabupaten.getText().replaceAll("KABUPATEN","-"));
-            }            
+            }else if(Kabupaten.isEditable()==false){
+                if(kdkab.equals("")){
+                    Sequel.queryu4("insert into kabupaten values(?,?)",2,new String[]{"0",Kabupaten.getText().replaceAll("KABUPATEN","-")});
+                    kdkab=Sequel.cariIsi("select kabupaten.kd_kab from kabupaten where kabupaten.nm_kab=?",Kabupaten.getText().replaceAll("KABUPATEN","-"));
+                }
+            }
+            
             if(Propinsi.isEditable()==true){
                Sequel.queryu4("insert into propinsi values(?,?)",2,new String[]{"0",Propinsi.getText().replaceAll("PROPINSI","-")}); 
                kdprop=Sequel.cariIsi("select propinsi.kd_prop from propinsi where propinsi.nm_prop=?",Propinsi.getText().replaceAll("PROPINSI","-"));
+            }else if(Propinsi.isEditable()==false){
+                if(kdprop.equals("")){
+                    Sequel.queryu4("insert into propinsi values(?,?)",2,new String[]{"0",Propinsi.getText().replaceAll("PROPINSI","-")}); 
+                    kdprop=Sequel.cariIsi("select propinsi.kd_prop from propinsi where propinsi.nm_prop=?",Propinsi.getText().replaceAll("PROPINSI","-"));
+                }
             }
             
               
@@ -4486,7 +4508,6 @@ private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                     }
                 }
             }
-            
         }
 }//GEN-LAST:event_BtnSimpanActionPerformed
 
@@ -5188,7 +5209,6 @@ private void DTPLahirItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST
     lahir = DTPLahir.getDate();    
     birthday = lahir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     p = Period.between(birthday,today);
-    p2 =ChronoUnit.DAYS.between(birthday,today);
     TUmurTh.setText(String.valueOf(p.getYears()));
     TUmurBl.setText(String.valueOf(p.getMonths()));
     TUmurHr.setText(String.valueOf(p.getDays()));

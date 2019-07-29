@@ -39,6 +39,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -109,6 +110,8 @@ public final class BPJSCekNoRujukanPCare extends javax.swing.JDialog {
     private BPJSCekReferensiKabupaten kabupatenkll=new BPJSCekReferensiKabupaten(null,false);
     private BPJSCekReferensiKecamatan kecamatankll=new BPJSCekReferensiKecamatan(null,false);
     private BPJSApi api=new BPJSApi();
+    private Calendar cal = Calendar.getInstance();
+    private int day = cal.get(Calendar.DAY_OF_WEEK);
     private int pilih=0,p_no_ktp=0,p_tmp_lahir=0,p_nm_ibu=0,p_alamat=0,
             p_pekerjaan=0,p_no_tlp=0,p_umur=0,p_namakeluarga=0,p_no_peserta=0,
             p_kelurahan=0,p_kecamatan=0,p_kabupaten=0,p_pekerjaanpj=0,
@@ -132,12 +135,12 @@ public final class BPJSCekNoRujukanPCare extends javax.swing.JDialog {
     private long p2;
     private boolean empt=false;
     private HttpHeaders headers;
-    private HttpHeaders headers2;
     private HttpEntity requestEntity;
     private ObjectMapper mapper = new ObjectMapper();
     private JsonNode root;
     private JsonNode nameNode;
     private JsonNode response;
+    private String hari="";
 
     /** Creates new form DlgKamar
      * @param parent
@@ -985,6 +988,30 @@ public final class BPJSCekNoRujukanPCare extends javax.swing.JDialog {
                 if(dpjp.getTable().getSelectedRow()!= -1){  
                     KdDPJP.setText(dpjp.getTable().getValueAt(dpjp.getTable().getSelectedRow(),1).toString());
                     NmDPJP.setText(dpjp.getTable().getValueAt(dpjp.getTable().getSelectedRow(),2).toString());
+                    try{
+                        ps=koneksi.prepareStatement(
+                                "select maping_dokter_dpjpvclaim.kd_dokter,dokter.nm_dokter from maping_dokter_dpjpvclaim inner join dokter "+
+                                "on maping_dokter_dpjpvclaim.kd_dokter=dokter.kd_dokter where maping_dokter_dpjpvclaim.kd_dokter_bpjs=?");
+                        try{
+                            ps.setString(1,KdDPJP.getText());
+                            rs=ps.executeQuery();
+                            if(rs.next()){
+                                kddokter.setText(rs.getString("kd_dokter"));
+                                TDokter.setText(rs.getString("nm_dokter"));
+                            }
+                        }catch(Exception ex){
+                            System.out.println("Notif : "+ex);
+                        }finally{
+                            if(rs!=null){
+                                rs.close();
+                            }
+                            if(ps!=null){
+                                ps.close();
+                            }  
+                        }
+                    }catch(Exception ex){
+                        System.out.println("Notif : "+ex);
+                    }
                     KdDPJP.requestFocus();             
                 }  
             }
@@ -3568,6 +3595,11 @@ public final class BPJSCekNoRujukanPCare extends javax.swing.JDialog {
 
     private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        if(ChkCari.isSelected()==true){
+            ChkCari.setSelected(false);
+            isForm();
+        }  
+        ChkRM.setSelected(true);
         tampil(NoRujukan.getText());
         this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_BtnCariActionPerformed
@@ -5459,6 +5491,46 @@ public final class BPJSCekNoRujukanPCare extends javax.swing.JDialog {
                         ps.close();
                     }
                 }
+                Catatan.setText(statuspasien);
+                ps=koneksi.prepareStatement(
+                        "select maping_dokter_dpjpvclaim.kd_dokter,maping_dokter_dpjpvclaim.kd_dokter_bpjs,maping_dokter_dpjpvclaim.nm_dokter_bpjs from maping_dokter_dpjpvclaim inner join jadwal "+
+                        "on maping_dokter_dpjpvclaim.kd_dokter=jadwal.kd_dokter where jadwal.kd_poli=? and jadwal.hari_kerja=?");
+                try {
+                    if(day==1){
+                        hari="AKHAD";
+                    }else if(day==2){
+                        hari="SENIN";
+                    }else if(day==3){
+                        hari="SELASA";
+                    }else if(day==4){
+                        hari="RABU";
+                    }else if(day==5){
+                        hari="KAMIS";
+                    }else if(day==6){
+                        hari="JUMAT";
+                    }else if(day==7){
+                        hari="SABTU";
+                    }
+                    
+                    ps.setString(1,kdpoli.getText());
+                    ps.setString(2,hari);
+                    rs=ps.executeQuery();
+                    if(rs.next()){
+                        KdDPJP.setText(rs.getString("kd_dokter_bpjs"));
+                        NmDPJP.setText(rs.getString("nm_dokter_bpjs"));
+                        kddokter.setText(rs.getString("kd_dokter"));
+                        TDokter.setText(rs.getString("nm_dokter_bpjs"));
+                    }
+                } catch (Exception e) {
+                    System.out.println("Notif : "+e);
+                } finally{
+                    if(rs!=null){
+                        rs.close();
+                    }
+                    if(ps!=null){
+                        ps.close();
+                    }
+                }
             }else {
                 emptTeks();
                 ChkCari.setSelected(false);
@@ -5785,18 +5857,41 @@ public final class BPJSCekNoRujukanPCare extends javax.swing.JDialog {
         if(Kelurahan.isEditable()==true){
             Sequel.queryu4("insert into kelurahan values(?,?)",2,new String[]{"0",Kelurahan.getText().replaceAll("KELURAHAN","-")});
             kdkel=Sequel.cariIsi("select kelurahan.kd_kel from kelurahan where kelurahan.nm_kel=?",Kelurahan.getText().replaceAll("KELURAHAN","-"));
+        }else if(Kelurahan.isEditable()==false){
+            if(kdkel.equals("")){
+                Sequel.queryu4("insert into kelurahan values(?,?)",2,new String[]{"0",Kelurahan.getText().replaceAll("KELURAHAN","-")});
+                kdkel=Sequel.cariIsi("select kelurahan.kd_kel from kelurahan where kelurahan.nm_kel=?",Kelurahan.getText().replaceAll("KELURAHAN","-"));
+            }
         }
+
         if(Kecamatan.isEditable()==true){
             Sequel.queryu4("insert into kecamatan values(?,?)",2,new String[]{"0",Kecamatan.getText().replaceAll("KECAMATAN","-")});
             kdkec=Sequel.cariIsi("select kecamatan.kd_kec from kecamatan where kecamatan.nm_kec=?",Kecamatan.getText().replaceAll("KECAMATAN","-"));
-        }            
+        }else if(Kecamatan.isEditable()==false){
+            if(kdkec.equals("")){
+                Sequel.queryu4("insert into kecamatan values(?,?)",2,new String[]{"0",Kecamatan.getText().replaceAll("KECAMATAN","-")});
+                kdkec=Sequel.cariIsi("select kecamatan.kd_kec from kecamatan where kecamatan.nm_kec=?",Kecamatan.getText().replaceAll("KECAMATAN","-"));
+            }
+        }
+
         if(Kabupaten.isEditable()==true){
             Sequel.queryu4("insert into kabupaten values(?,?)",2,new String[]{"0",Kabupaten.getText().replaceAll("KABUPATEN","-")});
             kdkab=Sequel.cariIsi("select kabupaten.kd_kab from kabupaten where kabupaten.nm_kab=?",Kabupaten.getText().replaceAll("KABUPATEN","-"));
-        }            
+        }else if(Kabupaten.isEditable()==false){
+            if(kdkab.equals("")){
+                Sequel.queryu4("insert into kabupaten values(?,?)",2,new String[]{"0",Kabupaten.getText().replaceAll("KABUPATEN","-")});
+                kdkab=Sequel.cariIsi("select kabupaten.kd_kab from kabupaten where kabupaten.nm_kab=?",Kabupaten.getText().replaceAll("KABUPATEN","-"));
+            }
+        }
+
         if(Propinsi.isEditable()==true){
            Sequel.queryu4("insert into propinsi values(?,?)",2,new String[]{"0",Propinsi.getText().replaceAll("PROPINSI","-")}); 
            kdprop=Sequel.cariIsi("select propinsi.kd_prop from propinsi where propinsi.nm_prop=?",Propinsi.getText().replaceAll("PROPINSI","-"));
+        }else if(Propinsi.isEditable()==false){
+            if(kdprop.equals("")){
+                Sequel.queryu4("insert into propinsi values(?,?)",2,new String[]{"0",Propinsi.getText().replaceAll("PROPINSI","-")}); 
+                kdprop=Sequel.cariIsi("select propinsi.kd_prop from propinsi where propinsi.nm_prop=?",Propinsi.getText().replaceAll("PROPINSI","-"));
+            }
         }
         
         if(statuspasien.equals("Baru")){
