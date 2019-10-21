@@ -59,7 +59,6 @@ public final class DlgPermintaanRadiologi extends javax.swing.JDialog {
     private String[] kode,nama;
     private int jml=0,i=0,index=0,jmlparsial=0;
     private String kelas_radiologi="Yes",kelas="",cara_bayar_radiologi="Yes",pemeriksaan="",kamar,namakamar,status="";
-    private double ttl=0,item=0;
     private String norawatibu="",aktifkanparsial="no";
     private final Properties prop = new Properties();
 
@@ -830,7 +829,7 @@ private void ChkJlnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             Valid.textKosong(TCariPeriksa,"Data Permintaan");
         }else{
             
-            Sequel.queryu("delete from temporary_permintaan_radiologi");
+            Sequel.queryu("truncate table temporary_permintaan_radiologi");
             for(i=0;i<tbPemeriksaan.getRowCount();i++){ 
                 if(tbPemeriksaan.getValueAt(i,0).toString().equals("true")){
                     Sequel.menyimpan("temporary_permintaan_radiologi","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?",38,new String[]{
