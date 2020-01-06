@@ -48,7 +48,7 @@ public final class DlgResepPulang extends javax.swing.JDialog {
     private PreparedStatement ps,psbarang;
     private ResultSet rs;
     public DlgInputResepPulang inputresep=new DlgInputResepPulang(null,false);
-    private double total=0,jumlahtotal=0;
+    private double jumlahtotal=0;
     private riwayatobat Trackobat=new riwayatobat();
     private String aktifkanbatch="no";
     private int i=0;
@@ -661,11 +661,16 @@ private void ChkInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_btnBarangKeyPressed
 
     private void btnBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBarangActionPerformed
-        inputresep.setNoRm(TNoRw.getText(),"-",DTPCari1.getSelectedItem().toString(),Sequel.cariIsi("select current_time()"));
-        inputresep.tampil();
-        inputresep.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
-        inputresep.setLocationRelativeTo(internalFrame1);
-        inputresep.setVisible(true);
+        if(Sequel.cariRegistrasi(TNoRw.getText())>0){
+                JOptionPane.showMessageDialog(rootPane,"Data billing sudah terverifikasi, data tidak boleh dihapus.\nSilahkan hubungi bagian kasir/keuangan ..!!");
+                TCari.requestFocus();
+        }else{
+            inputresep.setNoRm(TNoRw.getText(),"-",DTPCari1.getSelectedItem().toString(),Sequel.cariIsi("select current_time()"));
+            inputresep.tampil();
+            inputresep.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
+            inputresep.setLocationRelativeTo(internalFrame1);
+            inputresep.setVisible(true);
+        }
     }//GEN-LAST:event_btnBarangActionPerformed
 
     private void TNoRwKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TNoRwKeyPressed

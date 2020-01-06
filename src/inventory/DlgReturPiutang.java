@@ -665,7 +665,7 @@ public class DlgReturPiutang extends javax.swing.JDialog {
         panelisi4.add(Jmlretur);
         Jmlretur.setBounds(524, 40, 50, 23);
 
-        label26.setText("Jml Retur :");
+        label26.setText("Jumlah Retur :");
         label26.setName("label26"); // NOI18N
         label26.setPreferredSize(new java.awt.Dimension(90, 23));
         panelisi4.add(label26);
@@ -1225,6 +1225,7 @@ private void BtnGudangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         akses.setform("DlgReturPiutang");
         if(aktifkanbatch.equals("yes")){
             form.barang.aktifkanbatch="yes";
+            form.barang.isBatch();
         }
         form.barang.emptTeks();
         form.barang.isCek();
