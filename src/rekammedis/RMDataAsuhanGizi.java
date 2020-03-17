@@ -77,7 +77,7 @@ public final class RMDataAsuhanGizi extends javax.swing.JDialog {
             if(i==0){
                 column.setPreferredWidth(105);
             }else if(i==1){
-                column.setPreferredWidth(70);
+                column.setPreferredWidth(65);
             }else if(i==2){
                 column.setPreferredWidth(150);
             }else if(i==3){
@@ -656,22 +656,12 @@ public final class RMDataAsuhanGizi extends javax.swing.JDialog {
         TPasien.setEditable(false);
         TPasien.setHighlighter(null);
         TPasien.setName("TPasien"); // NOI18N
-        TPasien.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TPasienKeyPressed(evt);
-            }
-        });
         FormInput.add(TPasien);
         TPasien.setBounds(331, 10, 280, 23);
 
         TNoRM.setEditable(false);
         TNoRM.setHighlighter(null);
         TNoRM.setName("TNoRM"); // NOI18N
-        TNoRM.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TNoRMKeyPressed(evt);
-            }
-        });
         FormInput.add(TNoRM);
         TNoRM.setBounds(217, 10, 112, 23);
 
@@ -728,11 +718,6 @@ public final class RMDataAsuhanGizi extends javax.swing.JDialog {
 
         TglLahir.setHighlighter(null);
         TglLahir.setName("TglLahir"); // NOI18N
-        TglLahir.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TglLahirKeyPressed(evt);
-            }
-        });
         FormInput.add(TglLahir);
         TglLahir.setBounds(689, 10, 90, 23);
 
@@ -743,11 +728,6 @@ public final class RMDataAsuhanGizi extends javax.swing.JDialog {
 
         Jk.setHighlighter(null);
         Jk.setName("Jk"); // NOI18N
-        Jk.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JkKeyPressed(evt);
-            }
-        });
         FormInput.add(Jk);
         Jk.setBounds(74, 40, 100, 23);
 
@@ -758,11 +738,6 @@ public final class RMDataAsuhanGizi extends javax.swing.JDialog {
 
         DiagnosaMasukRanap.setHighlighter(null);
         DiagnosaMasukRanap.setName("DiagnosaMasukRanap"); // NOI18N
-        DiagnosaMasukRanap.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                DiagnosaMasukRanapKeyPressed(evt);
-            }
-        });
         FormInput.add(DiagnosaMasukRanap);
         DiagnosaMasukRanap.setBounds(274, 40, 337, 23);
 
@@ -1294,10 +1269,6 @@ public final class RMDataAsuhanGizi extends javax.swing.JDialog {
         }
 }//GEN-LAST:event_TNoRwKeyPressed
 
-    private void TPasienKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TPasienKeyPressed
-        Valid.pindah(evt,TCari,BtnSimpan);
-}//GEN-LAST:event_TPasienKeyPressed
-
     private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
         if(TNoRM.getText().trim().equals("")){
             Valid.textKosong(TNoRw,"Pasien");
@@ -1538,9 +1509,6 @@ public final class RMDataAsuhanGizi extends javax.swing.JDialog {
 
     private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrintActionPerformed
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        if(! TCari.getText().trim().equals("")){
-            BtnCariActionPerformed(evt);
-        }
         if(tabMode.getRowCount()==0){
             JOptionPane.showMessageDialog(null,"Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
             BtnBatal.requestFocus();
@@ -1633,10 +1601,6 @@ public final class RMDataAsuhanGizi extends javax.swing.JDialog {
         }
 }//GEN-LAST:event_BtnAllKeyPressed
 
-    private void TNoRMKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TNoRMKeyPressed
-        // Valid.pindah(evt, TNm, BtnSimpan);
-}//GEN-LAST:event_TNoRMKeyPressed
-
     private void tbObatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbObatMouseClicked
         if(tabMode.getRowCount()!=0){
             try {
@@ -1695,7 +1659,6 @@ public final class RMDataAsuhanGizi extends javax.swing.JDialog {
             param.put("emailrs",akses.getemailrs());   
             param.put("diagnosa",DiagnosaMasukRanap.getText());   
             param.put("logo",Sequel.cariGambar("select logo from setting")); 
-            param.put("finger",Sequel.cariIsi("select sha1(sidikjari) from sidikjari inner join pegawai on pegawai.id=sidikjari.id where pegawai.nik=?",tbObat.getValueAt(tbObat.getSelectedRow(),31).toString())); 
             Valid.MyReportqry("rptCetakAsuhanGizi.jasper","report","::[ Laporan Asuhan Gizi Pasien ]::",
                         "select reg_periksa.no_rawat,pasien.no_rkm_medis,pasien.nm_pasien,pasien.jk,pasien.tgl_lahir,asuhan_gizi.tanggal,"+
                         "asuhan_gizi.antropometri_bb,asuhan_gizi.antropometri_tb,asuhan_gizi.antropometri_imt,asuhan_gizi.antropometri_lla,"+
@@ -1710,18 +1673,6 @@ public final class RMDataAsuhanGizi extends javax.swing.JDialog {
                         "inner join petugas on asuhan_gizi.nip=petugas.nip where asuhan_gizi.no_rawat='"+tbObat.getValueAt(tbObat.getSelectedRow(),0).toString()+"'",param);
         }
     }//GEN-LAST:event_MnAsuhanGiziActionPerformed
-
-    private void TglLahirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TglLahirKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TglLahirKeyPressed
-
-    private void JkKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JkKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JkKeyPressed
-
-    private void DiagnosaMasukRanapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DiagnosaMasukRanapKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DiagnosaMasukRanapKeyPressed
 
     private void BBKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BBKeyPressed
         Valid.pindah(evt,TglAsuhan,TB);
@@ -2142,10 +2093,10 @@ public final class RMDataAsuhanGizi extends javax.swing.JDialog {
         Sequel.cariIsi("select tgl_lahir from pasien where no_rkm_medis=? ",TglLahir,TNoRM.getText());
     }
     
-    public void setNoRm(String norwt, Date tgl1, Date tgl2) {
+    public void setNoRm(String norwt, Date tgl2) {
         TNoRw.setText(norwt);
         TCari.setText(norwt);
-        DTPCari1.setDate(tgl1);
+        Sequel.cariIsi("select tgl_registrasi from reg_periksa where no_rawat='"+norwt+"'", DTPCari1);
         DTPCari2.setDate(tgl2);    
         isRawat();
         isPsien();              

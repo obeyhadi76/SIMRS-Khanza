@@ -50,6 +50,8 @@ import net.sf.jasperreports.engine.export.JRExporterContext;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.view.JasperViewer;
 import uz.ncipro.calendar.JDateTimePicker;
+import widget.Button;
+import widget.TextArea;
 /**
  *
  * @author Owner
@@ -450,6 +452,33 @@ public final class validasi {
         cmb.removeAllItems();
         try {
             ps=connect.prepareStatement("select "+field+" from "+table+" order by "+field);
+            try{
+                rs=ps.executeQuery();
+                while(rs.next()){
+                    String item=rs.getString(1);
+                    cmb.addItem(item);
+                    a++;
+                }          
+            }catch(Exception e){
+                System.out.println("Notifikasi : "+e);
+            }finally{
+                if(rs != null){
+                    rs.close();
+                }
+                
+                if(ps != null){
+                    ps.close();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notifikasi : "+e);
+        }
+    }
+    
+    public void loadCombo(JComboBox cmb,String query){
+        cmb.removeAllItems();
+        try {
+            ps=connect.prepareStatement(query);
             try{
                 rs=ps.executeQuery();
                 while(rs.next()){
@@ -883,6 +912,14 @@ public final class validasi {
             kiri.requestFocus();
         }
     }
+    
+    public void pindah(KeyEvent evt, Button kiri, TextArea kanan) {
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            kanan.requestFocus();
+        }else if(evt.getKeyCode()==KeyEvent.VK_PAGE_UP){
+            kiri.requestFocus();
+        }
+    }
 
     public void pindah(java.awt.event.KeyEvent evt,JDateTimePicker kiri,JTextField kanan){
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
@@ -1140,5 +1177,7 @@ public final class validasi {
             return Math.round(number);
         }
     }
+
+    
        
 }
