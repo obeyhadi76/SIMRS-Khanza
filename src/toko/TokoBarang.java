@@ -107,7 +107,7 @@ public final class TokoBarang extends javax.swing.JDialog {
         }
         tbJnsPerawatan.setDefaultRenderer(Object.class, new WarnaTable());
 
-        kode_brng.setDocument(new batasInput((byte)15).getKata(kode_brng));
+        kode_brng.setDocument(new batasInput((byte)10).getKata(kode_brng));
         nama_brng.setDocument(new batasInput((byte)80).getKata(nama_brng));
         kode_sat.setDocument(new batasInput((byte)4).getKata(kode_sat));
         stok.setDocument(new batasInput((byte)10).getKata(stok));
@@ -321,6 +321,7 @@ public final class TokoBarang extends javax.swing.JDialog {
         BtnSimpan.setText("Simpan");
         BtnSimpan.setToolTipText("Alt+S");
         BtnSimpan.setName("BtnSimpan"); // NOI18N
+        BtnSimpan.setPreferredSize(new java.awt.Dimension(100, 30));
         BtnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnSimpanActionPerformed(evt);
@@ -506,7 +507,7 @@ public final class TokoBarang extends javax.swing.JDialog {
         label1.setText("Kode Barang :");
         label1.setName("label1"); // NOI18N
         FormInput.add(label1);
-        label1.setBounds(0, 10, 90, 23);
+        label1.setBounds(0, 10, 89, 23);
 
         kode_brng.setName("kode_brng"); // NOI18N
         kode_brng.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -529,18 +530,18 @@ public final class TokoBarang extends javax.swing.JDialog {
         label7.setText("Jenis :");
         label7.setName("label7"); // NOI18N
         FormInput.add(label7);
-        label7.setBounds(355, 70, 40, 23);
+        label7.setBounds(385, 70, 40, 23);
 
         label10.setText("Nama Barang :");
         label10.setName("label10"); // NOI18N
         FormInput.add(label10);
-        label10.setBounds(0, 40, 90, 23);
+        label10.setBounds(0, 40, 89, 23);
 
         label19.setText("Satuan :");
         label19.setName("label19"); // NOI18N
         label19.setPreferredSize(new java.awt.Dimension(65, 23));
         FormInput.add(label19);
-        label19.setBounds(0, 70, 90, 23);
+        label19.setBounds(0, 70, 89, 23);
 
         kode_sat.setEditable(false);
         kode_sat.setName("kode_sat"); // NOI18N
@@ -576,7 +577,7 @@ public final class TokoBarang extends javax.swing.JDialog {
         label20.setName("label20"); // NOI18N
         label20.setPreferredSize(new java.awt.Dimension(65, 23));
         FormInput.add(label20);
-        label20.setBounds(560, 40, 70, 23);
+        label20.setBounds(590, 40, 70, 23);
 
         stok.setEditable(false);
         stok.setText("0");
@@ -588,7 +589,7 @@ public final class TokoBarang extends javax.swing.JDialog {
             }
         });
         FormInput.add(stok);
-        stok.setBounds(633, 40, 60, 23);
+        stok.setBounds(663, 40, 60, 23);
 
         dasar.setText("0");
         dasar.setName("dasar"); // NOI18N
@@ -603,12 +604,12 @@ public final class TokoBarang extends javax.swing.JDialog {
             }
         });
         FormInput.add(dasar);
-        dasar.setBounds(543, 10, 150, 23);
+        dasar.setBounds(573, 10, 150, 23);
 
         label2.setText("Harga Dasar : Rp.");
         label2.setName("label2"); // NOI18N
         FormInput.add(label2);
-        label2.setBounds(420, 10, 120, 23);
+        label2.setBounds(450, 10, 120, 23);
 
         kdjenis.setEditable(false);
         kdjenis.setName("kdjenis"); // NOI18N
@@ -619,13 +620,13 @@ public final class TokoBarang extends javax.swing.JDialog {
             }
         });
         FormInput.add(kdjenis);
-        kdjenis.setBounds(400, 70, 61, 23);
+        kdjenis.setBounds(430, 70, 61, 23);
 
         nmjenis.setEditable(false);
         nmjenis.setName("nmjenis"); // NOI18N
         nmjenis.setPreferredSize(new java.awt.Dimension(207, 23));
         FormInput.add(nmjenis);
-        nmjenis.setBounds(463, 70, 203, 23);
+        nmjenis.setBounds(493, 70, 203, 23);
 
         btnJenis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
         btnJenis.setMnemonic('1');
@@ -638,7 +639,7 @@ public final class TokoBarang extends javax.swing.JDialog {
             }
         });
         FormInput.add(btnJenis);
-        btnJenis.setBounds(668, 70, 25, 23);
+        btnJenis.setBounds(698, 70, 25, 23);
 
         label3.setText("Harga Beli : Rp.");
         label3.setName("label3"); // NOI18N
@@ -663,7 +664,7 @@ public final class TokoBarang extends javax.swing.JDialog {
         label4.setText("Harga Distributor : Rp.");
         label4.setName("label4"); // NOI18N
         FormInput.add(label4);
-        label4.setBounds(400, 100, 140, 23);
+        label4.setBounds(430, 100, 140, 23);
 
         distributor.setText("0");
         distributor.setName("distributor"); // NOI18N
@@ -678,7 +679,7 @@ public final class TokoBarang extends javax.swing.JDialog {
             }
         });
         FormInput.add(distributor);
-        distributor.setBounds(543, 100, 150, 23);
+        distributor.setBounds(573, 100, 150, 23);
 
         label5.setText("Harga Grosir : Rp.");
         label5.setName("label5"); // NOI18N
@@ -703,7 +704,7 @@ public final class TokoBarang extends javax.swing.JDialog {
         label6.setText("Harga Retail : Rp.");
         label6.setName("label6"); // NOI18N
         FormInput.add(label6);
-        label6.setBounds(400, 130, 140, 23);
+        label6.setBounds(430, 130, 140, 23);
 
         retail.setText("0");
         retail.setName("retail"); // NOI18N
@@ -718,7 +719,7 @@ public final class TokoBarang extends javax.swing.JDialog {
             }
         });
         FormInput.add(retail);
-        retail.setBounds(543, 130, 150, 23);
+        retail.setBounds(573, 130, 150, 23);
 
         PanelInput.add(FormInput, java.awt.BorderLayout.CENTER);
 
@@ -800,9 +801,11 @@ public final class TokoBarang extends javax.swing.JDialog {
 }//GEN-LAST:event_BtnBatalKeyPressed
 
     private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
-        Sequel.mengedit("tokobarang","kode_brng='"+kode_brng.getText()+"'","status='0'");
-        BtnCariActionPerformed(evt);
-        emptTeks();
+        if(tbJnsPerawatan.getSelectedRow()> -1){
+            Sequel.mengedit("tokobarang","kode_brng='"+kode_brng.getText()+"'","status='0'");
+            BtnCariActionPerformed(evt);
+            emptTeks();
+        }
 }//GEN-LAST:event_BtnHapusActionPerformed
 
     private void BtnHapusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnHapusKeyPressed
@@ -833,11 +836,13 @@ public final class TokoBarang extends javax.swing.JDialog {
         }else if(kdjenis.getText().trim().equals("")||nmjenis.getText().trim().equals("")){
             Valid.textKosong(kdjenis,"Jenis Barang");
         }else {
-            if(Sequel.mengedittf("tokobarang","kode_brng=?","kode_brng=?,nama_brng=?,kode_sat=?,jenis=?,stok=?,dasar=?,h_beli=?,distributor=?,grosir=?,retail=?",11,new String[]{
-                kode_brng.getText(),nama_brng.getText(), kode_sat.getText(), kdjenis.getText(),stok.getText(),dasar.getText(),beli.getText(),distributor.getText(),grosir.getText(),retail.getText(),tbJnsPerawatan.getValueAt(tbJnsPerawatan.getSelectedRow(),0).toString()
-            })==true){
-                tampil();
-                emptTeks();
+            if(tbJnsPerawatan.getSelectedRow()> -1){
+                if(Sequel.mengedittf("tokobarang","kode_brng=?","kode_brng=?,nama_brng=?,kode_sat=?,jenis=?,stok=?,dasar=?,h_beli=?,distributor=?,grosir=?,retail=?",11,new String[]{
+                    kode_brng.getText(),nama_brng.getText(), kode_sat.getText(), kdjenis.getText(),stok.getText(),dasar.getText(),beli.getText(),distributor.getText(),grosir.getText(),retail.getText(),tbJnsPerawatan.getValueAt(tbJnsPerawatan.getSelectedRow(),0).toString()
+                })==true){
+                    tampil();
+                    emptTeks();
+                }
             }
         }
 }//GEN-LAST:event_BtnEditActionPerformed
