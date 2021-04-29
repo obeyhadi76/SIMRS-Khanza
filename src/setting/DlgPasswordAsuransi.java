@@ -28,7 +28,7 @@ import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import simrskhanza.DlgPenanggungJawab;
+import simrskhanza.DlgCariCaraBayar;
 
 /**
  *
@@ -41,7 +41,7 @@ public class DlgPasswordAsuransi extends javax.swing.JDialog {
     private validasi Valid=new validasi();
     private PreparedStatement ps;
     private ResultSet rs;
-    private DlgPenanggungJawab penjab=new DlgPenanggungJawab(null,false);
+    private DlgCariCaraBayar penjab=new DlgCariCaraBayar(null,false);
 
     /** Creates new form DlgSpesialis
      * @param parent
@@ -563,11 +563,13 @@ public class DlgPasswordAsuransi extends javax.swing.JDialog {
             Valid.textKosong(kdpj,"Cara Bayar");
         }else{
             if(tbSpesialis.getSelectedRow()>-1){
-                Sequel.mengedit("password_asuransi","kd_pj=?","kd_pj=?",2,new String[]{
-                    kdpj.getText(),tabMode.getValueAt(tbSpesialis.getSelectedRow(),0).toString()
-                });
-                tampil();
-                emptTeks();
+                Valid.hapusTable(tabMode,kdpj,"password_asuransi","kd_pj");
+                if(Sequel.menyimpantf("password_asuransi","?,aes_encrypt(?,'nur'),aes_encrypt(?,'windi')","Cara Bayar",3,new String[]{
+                    kdpj.getText(),TKd.getText(),TPass.getText()
+                })==true){
+                    tampil();
+                    emptTeks();
+                }
             }
         }
     }//GEN-LAST:event_BtnEditActionPerformed

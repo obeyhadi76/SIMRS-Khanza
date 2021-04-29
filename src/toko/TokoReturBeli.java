@@ -41,7 +41,7 @@ public class TokoReturBeli extends javax.swing.JDialog {
     private WarnaTable2 warna=new WarnaTable2();
     public boolean tampikan=true;
     private boolean sukses=true;
-    private String Retur_Beli_Toko=Sequel.cariIsi("select Retur_Beli_Toko from set_akun"),Kontra_Retur_Beli_Toko=Sequel.cariIsi("select Kontra_Retur_Beli_Toko from set_akun");
+    private String hpptoko="",Retur_Beli_Toko=Sequel.cariIsi("select Retur_Beli_Toko from set_akun"),Kontra_Retur_Beli_Toko=Sequel.cariIsi("select Kontra_Retur_Beli_Toko from set_akun");
 
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -807,6 +807,7 @@ private void btnPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
                     for(i=0;i<jml;i++){
                         tbDokter.setValueAt("",i,0);
                         tbDokter.setValueAt(0,i,5);
+                        tbDokter.setValueAt("",i,6);
                     }
                     getData();
                 }else{
